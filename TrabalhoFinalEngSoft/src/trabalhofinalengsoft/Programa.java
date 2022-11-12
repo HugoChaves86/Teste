@@ -36,8 +36,13 @@ public class Programa {
         AlunoPosGrad alunoPos = new AlunoPosGrad("Fernanda", 200);
         Professor professor = new Professor("Cláudio", 100);
         
-
         biblioteca.emprestar(alunoGrad, 100);
+        System.out.println();
+        biblioteca.emprestar(alunoPos, 101);
+        System.out.println();
+        biblioteca.emprestar(professor, 200);
+        System.out.println();
+        
 
         
     }    

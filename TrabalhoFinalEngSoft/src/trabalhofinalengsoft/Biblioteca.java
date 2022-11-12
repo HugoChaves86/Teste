@@ -22,8 +22,7 @@ public class Biblioteca {
     //métodos
     
     public void emprestar(Usuario usuario, int codigo){
-        usuario.display();
-        usuario.emprestar(codigo);
+        usuario.emprestar(usuario, codigo);
         
     }
     
@@ -116,8 +115,7 @@ public class Biblioteca {
             System.out.println("======== Livros: ========");
             System.out.println("=========================");
             System.out.println("\nA biblioteca está vazia.\n");
-        }
-        
+        }        
             
         System.out.println("=========================");
         System.out.println("======== Livros: ========");
@@ -130,8 +128,6 @@ public class Biblioteca {
             soma++;
         }
         
-        System.out.println("\nTotal de livros: " + soma);
-        System.out.println("\n=====================");
-        System.out.println("=====================\n");
+        System.out.println("Total de livros: " + soma);
     }     
 }

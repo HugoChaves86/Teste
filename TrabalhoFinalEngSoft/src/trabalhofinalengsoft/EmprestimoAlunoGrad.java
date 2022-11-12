@@ -13,13 +13,14 @@ public class EmprestimoAlunoGrad implements RegraEmprestimo{
     private final LocalDateTime dataEmprestimo = LocalDateTime.now();
     
     @Override
-    public void emprestar(int codigo) {
+    public void emprestar(Usuario usuario, int codigo) {
         
         int cont = 0;
         
         for(Livro livro: Biblioteca.livros){
             if (codigo == livro.getCodigo()){
                 livro.setEmprestado(true);
+                usuario.display();
                 System.out.println("Empréstimo efetuado com sucesso.");
                 System.out.println("Titulo: " + livro.getTitulo());
                 System.out.println("Data do empréstimo: " + this.getDataEmprestimo());

@@ -41,6 +41,7 @@ public class Livro {
         System.out.println("Editora: " + this.getEditora());
         System.out.println("Edição: " + this.getEdicao());
         System.out.println("Autores: " + this.getAutores());
+        System.out.println("Está emprestado? " + this.isEmprestado());
     }
 
     public int getCodigo() {

@@ -22,7 +22,7 @@ public class AlunoGrad extends Usuario{
     public void display() {
         System.out.println("Nome: " + this.getNome());
         System.out.println("Código: " + this.getCodigo());
-        System.out.println("Eu sou um aluno de graduação.");
+        System.out.println("Aluno de graduação.");
     }
 
     public int getCodigo() {

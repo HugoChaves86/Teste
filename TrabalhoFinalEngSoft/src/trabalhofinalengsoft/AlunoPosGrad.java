@@ -22,7 +22,7 @@ public class AlunoPosGrad extends Usuario{
     public void display() {
         System.out.println("Nome: " + this.getNome());
         System.out.println("Código: " + this.getCodigo());
-        System.out.println("Eu sou um aluno de pós-graduação.");
+        System.out.println("Aluno de pós-graduação.");
     }
 
     public int getCodigo() {

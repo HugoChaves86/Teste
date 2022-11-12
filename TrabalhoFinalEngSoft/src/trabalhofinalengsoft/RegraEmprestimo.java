@@ -6,5 +6,5 @@ package trabalhofinalengsoft;
  */
 public interface RegraEmprestimo {
     
-    public void emprestar(int codigo);
+    public void emprestar(Usuario usuario, int codigo);
 }

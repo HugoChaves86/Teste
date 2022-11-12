@@ -14,8 +14,8 @@ public abstract class Usuario {
     //Métodos personalizados
     public abstract void display();
     
-    public void emprestar(int codigo){
-        regraEmprestimo.emprestar(codigo);
+    public void emprestar(Usuario usuario, int codigo){
+        regraEmprestimo.emprestar(usuario, codigo);
     }
     
     public void reservar(){

@@ -22,7 +22,7 @@ public class Professor extends Usuario{
     public void display() {
         System.out.println("Nome: " + this.getNome());
         System.out.println("Código: " + this.getCodigo());
-        System.out.println("Eu sou um professor da UFBA.");
+        System.out.println("Professor da UFBA.");
     }
 
     public int getCodigo() {
