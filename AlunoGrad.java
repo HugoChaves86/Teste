@@ -4,16 +4,11 @@ package trabalhofinalengsoft;
  *
  * @author Hugo_Chaves
  */
-public class AlunoGrad extends Usuario{
-    
-    //Atributos
-    private final int codigo;
-    private final String nome;
+public class AlunoGrad extends Usuario{    
 
     //construtor
     public AlunoGrad (String nome, int codigo){
-        this.codigo = codigo;
-        this.nome = nome;
+        super(nome, codigo);
         regraEmprestimo = new EmprestimoAlunoGrad();
         regraReserva = new ReservaAlunoGrad();
     }
@@ -23,13 +18,5 @@ public class AlunoGrad extends Usuario{
         System.out.println("Nome: " + this.getNome());
         System.out.println("Código: " + this.getCodigo());
         System.out.println("Aluno de graduação.");
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public String getNome() {
-        return nome;
     }    
 }

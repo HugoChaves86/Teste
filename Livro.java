@@ -10,18 +10,21 @@ import java.util.List;
 public class Livro {
     
     //atributos
-    private int codigo;
+    private final int codigo;
+    private final int codigoExemplar;
     private int anoPublicacao;
     private String titulo;
     private String editora;
     private String edicao;
     private List<String> autores;
     private boolean emprestado;
+    private boolean disponivel;
     
     //contrutor
-    public Livro (int codigo, int anoPublicacao, String titulo, String editora,
-        String edicao, String autor1, String autor2, String autor3){
+    public Livro (int anoPublicacao, int codigo, int codExemplar, String titulo, String editora,
+        String edicao, String autor1, String autor2, String autor3, String autor4){
         this.codigo = codigo;
+        this.codigoExemplar = codExemplar;
         this.anoPublicacao = anoPublicacao;
         this.titulo = titulo;
         this.editora = editora;
@@ -30,26 +33,26 @@ public class Livro {
         this.autores.add(autor1);
         this.autores.add(autor2);
         this.autores.add(autor3);
+        this.autores.add(autor4);
         this.emprestado = false;
+        this.disponivel = true;
     }
     
     public void detalhesDoLivro(){
         
         System.out.println("Título: " + this.getTitulo());
         System.out.println("Ano de publicação: " + this.getAnoPublicacao());
-        System.out.println("Código: " + this.getCodigo());
+        System.out.println("Código do livro: " + this.getCodigo());
+        System.out.println("Código do exemplar: " + this.getCodigoExemplar());
         System.out.println("Editora: " + this.getEditora());
         System.out.println("Edição: " + this.getEdicao());
         System.out.println("Autores: " + this.getAutores());
         System.out.println("Está emprestado? " + this.isEmprestado());
+        System.out.println("Está disponível? " + this.isDisponivel());
     }
 
     public int getCodigo() {
         return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
     }
 
     public int getAnoPublicacao() {
@@ -98,5 +101,17 @@ public class Livro {
 
     public void setEmprestado(boolean emprestado) {
         this.emprestado = emprestado;
+    }   
+
+    public int getCodigoExemplar() {
+        return codigoExemplar;
+    }   
+
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
     }   
 }

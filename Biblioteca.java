@@ -1,6 +1,7 @@
 package trabalhofinalengsoft;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,7 +12,6 @@ import java.util.Scanner;
 public class Biblioteca {
     
     public static List<Livro> livros;
-    private Usuario usuario;
     
     //construtor
     public Biblioteca (){
@@ -34,11 +34,25 @@ public class Biblioteca {
 //        usuario.devolver();
 //    }
     
-    public void adicionarLivro(int anoPublicacao, int codigo, String titulo, String editora, 
-                String edicao, String autor1, String autor2, String autor3){
+    public void adicionarLivro(int anoPublicacao, int codigo, int codExemplar, String titulo, String editora, 
+        String edicao, String autor1, String autor2, String autor3, String autor4){
         
-        this.livros.add(new Livro(anoPublicacao, codigo, titulo, editora, edicao, autor1, autor2, autor3));
+        livros.add(new Livro(anoPublicacao, codigo, codExemplar, titulo, editora, edicao, autor1, 
+                autor2, autor3, autor4));
+                
     }
+    
+    public int retornaDisponíveis(int codigo){
+        int contador = 0;
+        for(Livro livro: livros){
+            if(livro.getCodigo() == codigo && livro.isDisponivel()){
+                contador++;
+            }
+        }
+        return contador;
+    }
+                
+
 //    public void adicionarLivro(){
 //        
 //        System.out.println("\n===== Cadastrar Livros =====\n");
@@ -122,7 +136,6 @@ public class Biblioteca {
         System.out.println("=========================\n");
         
         for (Livro livro: livros){
-
             livro.detalhesDoLivro();
             System.out.println();
             soma++;
