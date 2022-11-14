@@ -1,7 +1,6 @@
 package trabalhofinalengsoft;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,37 +20,37 @@ public class Biblioteca {
     
     //métodos
     
-    public void emprestar(Usuario usuario, int codigo){
-        usuario.emprestar(usuario, codigo);
-        
-    }
-    
-//    public void reservar(Usuario usuario){
-//        usuario.reservar();
-//    }
-//    
-//    public void devolver(Usuario usuario){
-//        usuario.devolver();
-//    }
-    
     public void adicionarLivro(int anoPublicacao, int codigo, int codExemplar, String titulo, String editora, 
         String edicao, String autor1, String autor2, String autor3, String autor4){
         
         livros.add(new Livro(anoPublicacao, codigo, codExemplar, titulo, editora, edicao, autor1, 
-                autor2, autor3, autor4));
-                
+                autor2, autor3, autor4));        
     }
-    
-    public int retornaDisponíveis(int codigo){
-        int contador = 0;
-        for(Livro livro: livros){
-            if(livro.getCodigo() == codigo && livro.isDisponivel()){
-                contador++;
-            }
+ 
+    public void exibirLivros(){
+        
+        int soma = 0;
+        
+        if (livros.isEmpty()){
+            
+            System.out.println("=========================");
+            System.out.println("======== Livros: ========");
+            System.out.println("=========================");
+            System.out.println("\nA biblioteca está vazia.\n");
+        }        
+            
+        System.out.println("=========================");
+        System.out.println("======== Livros: ========");
+        System.out.println("=========================\n");
+        
+        for (Livro livro: livros){
+            livro.detalhesDoLivro();
+            System.out.println();
+            soma++;
         }
-        return contador;
-    }
-                
+        
+        System.out.println("Total de livros: " + soma);
+    }   
 
 //    public void adicionarLivro(){
 //        
@@ -92,55 +91,32 @@ public class Biblioteca {
 //        }while("s".equalsIgnoreCase(opc));
 //    }
     
-    public void removerLivro(){
+//    public void removerLivro(){
+//        
+//        System.out.println("\n===== Remover Livro =====\n");
+//        
+//        Scanner in = new Scanner(System.in);
+//        Scanner str = new Scanner(System.in);
+//        String opc;
+//            
+//        do{
+//            System.out.print("Insira o codigo do livro: ");
+//            int codigo = in.nextInt();
+//            
+//            for (Livro livro: livros){
+//            
+//                if(livro.getCodigo() == codigo){
+//                    livros.remove(livro);
+//                    break;
+//                }    
+//            }
+//            System.out.println("\nLivro de código " + codigo + " removido com sucesso.\n");
+//            System.out.println("\nDeseja remover mais livros da biblioteca? S p/ sim e N para nao.");
+//            System.out.print("Digite a sua opcao: ");
+//            opc = str.nextLine();
+//            
+//        }while("s".equalsIgnoreCase(opc));               
+//    }
         
-        System.out.println("\n===== Remover Livro =====\n");
-        
-        Scanner in = new Scanner(System.in);
-        Scanner str = new Scanner(System.in);
-        String opc;
-            
-        do{
-            System.out.print("Insira o codigo do livro: ");
-            int codigo = in.nextInt();
-            
-            for (Livro livro: livros){
-            
-                if(livro.getCodigo() == codigo){
-                    livros.remove(livro);
-                    break;
-                }    
-            }
-            System.out.println("\nLivro de código " + codigo + " removido com sucesso.\n");
-            System.out.println("\nDeseja remover mais livros da biblioteca? S p/ sim e N para nao.");
-            System.out.print("Digite a sua opcao: ");
-            opc = str.nextLine();
-            
-        }while("s".equalsIgnoreCase(opc));               
-    }
-    
-    public void exibirLivros(){
-        
-        int soma = 0;
-        
-        if (livros.isEmpty()){
-            
-            System.out.println("=========================");
-            System.out.println("======== Livros: ========");
-            System.out.println("=========================");
-            System.out.println("\nA biblioteca está vazia.\n");
-        }        
-            
-        System.out.println("=========================");
-        System.out.println("======== Livros: ========");
-        System.out.println("=========================\n");
-        
-        for (Livro livro: livros){
-            livro.detalhesDoLivro();
-            System.out.println();
-            soma++;
-        }
-        
-        System.out.println("Total de livros: " + soma);
-    }     
-}
+}    
+

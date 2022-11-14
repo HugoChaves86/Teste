@@ -1,5 +1,8 @@
 package trabalhofinalengsoft;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Hugo_Chaves
@@ -7,45 +10,51 @@ package trabalhofinalengsoft;
 public abstract class Usuario {
     RegraEmprestimo regraEmprestimo;
     RegraReserva regraReserva;
-    private String nome;
-    private int codigo;
-    
+    private final String nome;
+    private final int codigo;
+    private boolean devedor;
+    protected List<Usuario> usuarios;
     
     // Construtor padrão
     public Usuario(String nome, int codigo){
         this.nome = nome;
-        this.codigo = codigo;
+        this.codigo = codigo; 
+        this.devedor = false;
+        this.usuarios = new ArrayList<>();
     }
     
     //Métodos personalizados
     public abstract void display();
     
-    public void emprestar(Usuario usuario, int codigo){
-        regraEmprestimo.emprestar(usuario, codigo);
+    public void listarEmprestimos(){
+        regraEmprestimo.listarEmprestimos();
+    }
+    
+    public void pegarEmprestado(Usuario usuario, int codigoLivro){
+        regraEmprestimo.pegarEmprestado(usuario, codigoLivro);
     }
     
     public void reservar(){
         regraReserva.reservar();
     }
     
-    public void devolver(){
-        System.out.println("Todos os usuários devem devolver no prazo, a fim de evitar penalizações.");
-        //pensar em alguma coisa aqui
+    public void devolver(Usuario usuario, int codigoLivro){
+        regraEmprestimo.devolver(usuario, codigoLivro);
     }    
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public int getCodigo() {
         return codigo;
+    }       
+
+    public boolean isDevedor() {
+        return devedor;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
+    public void setDevedor(boolean devedor) {
+        this.devedor = devedor;
+    }   
 }

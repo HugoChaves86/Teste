@@ -13,13 +13,13 @@ public class EmprestimoAlunoPos implements RegraEmprestimo{
     private final LocalDateTime dataEmprestimo = LocalDateTime.now();
 
     @Override
-    public void emprestar(Usuario usuario, int codigo) {
+    public void pegarEmprestado(Usuario usuario, int codigoLivro) {
         
         int cont = 0;
         
         for(Livro livro: Biblioteca.livros){
-            if (codigo == livro.getCodigo()){
-                livro.setEmprestado(true);
+            if (codigoLivro == livro.getCodigo()){
+                livro.setDisponivel(true);
                 usuario.display();
                 System.out.println("Empréstimo efetuado com sucesso.");
                 System.out.println("Titulo: " + livro.getTitulo());
@@ -52,4 +52,14 @@ public class EmprestimoAlunoPos implements RegraEmprestimo{
         
     	return formatado;
     }    
+
+    @Override
+    public void listarEmprestimos() {
+        System.out.println("Falta implementação.");
+    }
+
+    @Override
+    public void devolver(Usuario usuario, int codigoLivro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
