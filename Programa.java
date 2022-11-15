@@ -1,5 +1,8 @@
 package trabalhofinalengsoft;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 /**
  *
  * @author Hugo_Chaves
@@ -42,30 +45,44 @@ public class Programa {
         biblioteca.adicionarLivro(2003, 401, 10, "UML Distilled: A Brief Guide to the Standard Object Modeling Language",
                 "Addison-Wesley Professional", "3a edicao", "Martin Fowler", "", "", "");
         
+             
+        Scanner teclado = new Scanner(System.in);
         
-//        biblioteca.exibirLivros();
-//        System.out.println("Exemplares disponíveis: " + biblioteca.retornaDisponíveis(100));
-//    
-        AlunoGrad alunoGrad = new AlunoGrad("Hugo", 150);
-//        AlunoPosGrad alunoPos = new AlunoPosGrad("Fernanda", 200);
-//        Professor professor = new Professor("Cláudio", 100);
-        
-//        
-        alunoGrad.pegarEmprestado(alunoGrad, 100);
-//        System.out.println();
-//        alunoGrad.pegarEmprestado(alunoGrad, 100);
-        System.out.println();
-        alunoGrad.listarEmprestimos();      
-        
-        
-        
-//        biblioteca.pegarEmprestado(alunoPos, 101);
-//        System.out.println();
-//        biblioteca.pegarEmprestado(professor, 200);
-//        System.out.println();  
+        int opc = 0;
+    
+        do{
+            
+            System.out.println("======= Biblioteca =======");
+            System.out.println("==========================\n");
+            System.out.println("Digite 1 para se cadastrar;");
+            System.out.println("Digite 2 para realizar empréstimo;");
+            System.out.println("Digite 3 para exibir exemplares;");
+            System.out.println("Digite 4 para listar usuários;");
+            System.out.println("Digite 5 para sair;");
+           
+            boolean passou = true;
+            while(passou){
+                try{
+                    System.out.print("\nDigite a opcao desejada: ");
+                    opc = teclado.nextInt();
+                    passou = false;
+                }catch(InputMismatchException ime) {
+                    System.err.print("Você deve informar um número. Digite uma tecla para tentar novamente.\n");
+                    teclado.next(); // Consumo de 1 caractere para o loop rodar.
+                }
+            }
+            teclado.nextLine(); // Limpa buffer
 
+            switch(opc){
+                
+                case 1 -> biblioteca.cadastrarUsuarios(teclado);  
+                case 2 -> biblioteca.realizarEmprestimo(teclado);
+                case 3 -> biblioteca.exibirLivros();
+                case 4 -> biblioteca.listarUsuarios();                
+                
+            }
+            
+        }while (opc < 5);
+    }
+}      
         
-
-        
-    }    
-}

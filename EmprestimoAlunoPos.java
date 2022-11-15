@@ -2,35 +2,62 @@ package trabalhofinalengsoft;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Hugo_Chaves
  */
-public class EmprestimoAlunoPos implements RegraEmprestimo{
+public final class EmprestimoAlunoPos implements RegraEmprestimo{ 
     
     private final int duracaoEmprestimoEmDias = 4;
     private final LocalDateTime dataEmprestimo = LocalDateTime.now();
-
-    @Override
-    public void pegarEmprestado(Usuario usuario, int codigoLivro) {
+    private String dataEmprestado;
+    private String titulo;
+    private final List<EmprestimoAlunoPos> emprestimos = new ArrayList<>();
+    
+    //construtor
+    public EmprestimoAlunoPos(){}   
+    
+    public EmprestimoAlunoPos(String titulo, String dataEmprestado){
         
-        int cont = 0;
+        this.titulo = titulo;
+        this.dataEmprestado = dataEmprestado;
+    }
+    
+    @Override
+    public void emprestar(Usuario usuario, int codigoLivro) {
+        
+        int auxiliar = -1;
         
         for(Livro livro: Biblioteca.livros){
-            if (codigoLivro == livro.getCodigo()){
-                livro.setDisponivel(true);
-                usuario.display();
-                System.out.println("Empréstimo efetuado com sucesso.");
+            if (codigoLivro == livro.getCodigo() && livro.isDisponivel()){
+                livro.setDisponivel(false);
+                System.out.println("\nEmpréstimo efetuado com sucesso.");
+                System.out.println("Nome: " + usuario.getNome());
                 System.out.println("Titulo: " + livro.getTitulo());
                 System.out.println("Data do empréstimo: " + this.getDataEmprestimo());
                 System.out.println("Data de devolução: " + this.getDataDevolver());
-                cont++;
+                this.emprestimos.add(new EmprestimoAlunoPos(livro.getTitulo(), this.getDataEmprestimo()));
+                System.out.println();
+                auxiliar = -1;
                 break;
             }
+            if (codigoLivro != livro.getCodigo()){
+                auxiliar = 0;
+                continue;
+            }
+            if (!livro.isDisponivel()){
+                auxiliar = 1;
+            }
         }
-        if (cont == 0){
-            System.out.println("Empréstimo não efetuado. \nMotivo: Livro inexistente.");
+        switch(auxiliar){
+            
+            case 0 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
+                    + "\nMotivo: Livro inexistente.");
+            case 1 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
+                    + "\nMotivo: Livro indisponível.");
         }        
     } 
     
@@ -51,15 +78,38 @@ public class EmprestimoAlunoPos implements RegraEmprestimo{
     	String formatado = resultado.format(formatter);
         
     	return formatado;
-    }    
-
-    @Override
-    public void listarEmprestimos() {
-        System.out.println("Falta implementação.");
+    }  
+    
+    public String emprestimoEmCurso(){
+        
+        LocalDateTime agora = LocalDateTime.now();
+        LocalDateTime dataDevolver = dataEmprestimo.plusDays(duracaoEmprestimoEmDias);
+        
+        if (dataDevolver.isAfter(agora)){
+            return "Sim";
+        }
+        else{
+            return "Não. Empréstimo finalizado.";
+        }        
     }
-
+    
     @Override
-    public void devolver(Usuario usuario, int codigoLivro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void listarEmprestimos(){
+        
+        int cont = 1;
+        for (EmprestimoAlunoPos emprestimo: emprestimos){
+            System.out.println("Empréstimo 0" + cont + ": ====\n");
+            System.out.println("Titulo: " + emprestimo.titulo);
+            System.out.println("Data do empréstimo: " + emprestimo.dataEmprestado);
+            System.out.println("Empréstimo em curso? " + emprestimo.emprestimoEmCurso());
+            if (emprestimo.emprestimoEmCurso().equalsIgnoreCase("Sim")){
+                System.out.println("Data prevista para devolução: " + emprestimo.getDataDevolver());
+            }else{
+                System.out.println("Devolvido em: ..... (APLICAR AQUI A DATA DE DEVOLUÇÂO EFETIVA)");                
+            }
+            cont++;
+        }
     }
 }
+        
+        

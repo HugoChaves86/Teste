@@ -4,24 +4,24 @@ package trabalhofinalengsoft;
  *
  * @author Hugo_Chaves
  */
-public class Professor extends Usuario{
+public class AlunoPos extends Usuario{
 
     //construtor
-    public Professor (String nome, int codigo){
+    public AlunoPos (String nome, int codigo){
         super(nome, codigo);
-        regraEmprestimo = new EmprestimoProfessor();
-        regraReserva = new ReservaProfessor();
+        regraEmprestimo = new EmprestimoAlunoPos();
+        regraReserva = new ReservaAlunoPos();
     }
     
     @Override
     public void display() {
         System.out.println("Nome: " + this.getNome());
         System.out.println("Código: " + this.getCodigo());
-        System.out.println("Professor da UFBA.");
-    }   
+        System.out.println("Aluno de pós-graduação.");
+    }    
 
     @Override
     public void devolver(Usuario usuario, int codigoLivro) {
-        //Lógica pendente.
+        // lógica pendente.
     }
 }

@@ -11,7 +11,6 @@ public class AlunoGrad extends Usuario{
         super(nome, codigo);
         regraEmprestimo = new EmprestimoAlunoGrad();
         regraReserva = new ReservaAlunoGrad();
-        usuarios.add(this);
     }
     
     @Override
@@ -20,4 +19,9 @@ public class AlunoGrad extends Usuario{
         System.out.println("Código: " + this.getCodigo());
         System.out.println("Aluno de graduação.");
     }        
+
+    @Override
+    public void devolver(Usuario usuario, int codigoLivro) {
+        //Lógica pendente.
+    }
 }

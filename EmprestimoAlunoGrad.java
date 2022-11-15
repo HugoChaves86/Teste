@@ -27,34 +27,32 @@ public final class EmprestimoAlunoGrad implements RegraEmprestimo{
     }
     
     @Override
-    public void pegarEmprestado(Usuario usuario, int codigoLivro) {
+    public void emprestar(Usuario usuario, int codigoLivro) {
         
-        int auxiliar = -1;
+        int auxiliar = -1, cont=0;
         
         for(Livro livro: Biblioteca.livros){
             if (codigoLivro == livro.getCodigo() && livro.isDisponivel()){
                 livro.setDisponivel(false);
-                System.out.println("Empréstimo efetuado com sucesso.");
+                System.out.println("\nEmpréstimo efetuado com sucesso.");
                 System.out.println("Nome: " + usuario.getNome());
                 System.out.println("Titulo: " + livro.getTitulo());
                 System.out.println("Data do empréstimo: " + this.getDataEmprestimo());
                 System.out.println("Data de devolução: " + this.getDataDevolver());
                 this.emprestimos.add(new EmprestimoAlunoGrad(livro.getTitulo(), this.getDataEmprestimo()));
+                auxiliar = -1;
+                cont = 0;
+                System.out.println();
                 break;
-            }
-            if (codigoLivro != livro.getCodigo()){
-                auxiliar = 0;
-                break;
-            }
-            if (!livro.isDisponivel()){
-                auxiliar = 1;
-                break;
-            }
+            }           
         }
+        
         switch(auxiliar){
             
-            case 0 -> System.out.println("Empréstimo não efetuado. \nMotivo: Livro inexistente.");
-            case 1 -> System.out.println("Empréstimo não efetuado. \nMotivo: Livro indisponível.");
+            case 0 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
+                    + "\nMotivo: Livro inexistente.");
+            case 1 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
+                    + "\nMotivo: Livro indisponível.");
         }        
     } 
     
@@ -106,14 +104,6 @@ public final class EmprestimoAlunoGrad implements RegraEmprestimo{
             }
             cont++;
         }
-    }
-
-    @Override
-    public void devolver(Usuario usuario, int codigoLivro) {
-        
-//        for(EmprestimoAlunoGrad emprestimo: emprestimos){
-//            if (usuario.getCodigo().)
-//        }
     }
 }
         
