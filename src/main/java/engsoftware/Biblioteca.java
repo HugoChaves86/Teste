@@ -18,9 +18,11 @@ import com.google.gson.Gson;
  * @author Hugo_Chaves
  */
 public abstract class Biblioteca {
-    public static List<Livro> livros = new ArrayList<>();
+    public static List<Livro> livros = inicializarLivros();
 
     private static List<Livro> inicializarLivros() {
+        livros = new ArrayList<>();
+
         try {
             Gson gson = new Gson();
             JSONParser parser = new JSONParser();
