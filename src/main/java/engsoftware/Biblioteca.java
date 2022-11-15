@@ -24,9 +24,8 @@ public abstract class Biblioteca {
         try {
             Gson gson = new Gson();
             JSONParser parser = new JSONParser();
-            //Use JSONObject for simple JSON and JSONArray for array of JSON.
             JSONArray data = (JSONArray) parser.parse(
-                    new FileReader("src/main/resources/livros.json"));//path to the JSON file.
+                    new FileReader("src/main/resources/livros.json"));
 
             for (Object jsonLivro: data) {
                 Livro livro = gson.fromJson(jsonLivro.toString(), Livro.class);
@@ -38,10 +37,7 @@ public abstract class Biblioteca {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        return livros;
-    }
 
-    public static void main(String[] args) {
-        System.out.println(Biblioteca.inicializarLivros());
+        return livros;
     }
 }
