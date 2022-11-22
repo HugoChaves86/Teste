@@ -19,9 +19,4 @@ public class Professor extends Usuario{
         System.out.println("Código: " + this.getCodigo());
         System.out.println("Professor da UFBA.");
     }   
-
-    @Override
-    public void devolver(Usuario usuario, int codigoLivro) {
-        //Lógica pendente.
-    }
 }

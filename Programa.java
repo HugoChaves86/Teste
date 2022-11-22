@@ -52,13 +52,14 @@ public class Programa {
     
         do{
             
-            System.out.println("======= Biblioteca =======");
+            System.out.println("\n======= Biblioteca =======");
             System.out.println("==========================\n");
             System.out.println("Digite 1 para se cadastrar;");
             System.out.println("Digite 2 para realizar empréstimo;");
             System.out.println("Digite 3 para exibir exemplares;");
             System.out.println("Digite 4 para listar usuários;");
-            System.out.println("Digite 5 para sair;");
+            System.out.println("Digite 5 para listar empréstimos;");
+            System.out.println("Digite 6 para sair;");
            
             boolean passou = true;
             while(passou){
@@ -79,10 +80,11 @@ public class Programa {
                 case 2 -> biblioteca.realizarEmprestimo(teclado);
                 case 3 -> biblioteca.exibirLivros();
                 case 4 -> biblioteca.listarUsuarios();                
+                case 5 -> biblioteca.listarEmprestimos();                
                 
             }
             
-        }while (opc < 5);
+        }while (opc < 6);
     }
 }      
         

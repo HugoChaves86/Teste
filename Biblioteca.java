@@ -71,6 +71,18 @@ public class Biblioteca {
         }
     }
     
+    public void listarEmprestimos(){
+        
+        if(usuarios.isEmpty()){
+            System.out.println("\nNão há usuários cadastrados.\n");
+        }
+        
+        for (Usuario usuario: usuarios){
+            System.out.println("\n=== Empréstimos de " + usuario.getNome() + " ===");
+            usuario.listarEmprestimos();
+        }
+    }
+    
     public void adicionarLivro(int anoPublicacao, int codigo, int codExemplar, String titulo, String editora, 
         String edicao, String autor1, String autor2, String autor3, String autor4){
         
@@ -119,7 +131,7 @@ public class Biblioteca {
             if(codigo == usuario.getCodigo()){
                 System.out.print("Digite o código do livro: ");
                 codigo = teclado.nextInt();
-                usuario.pegarEmprestado(usuario, codigo);
+                usuario.pegarEmprestado(codigo);
                 cont = 0;
                 break;
             }

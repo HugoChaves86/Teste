@@ -29,34 +29,45 @@ public final class EmprestimoAlunoPos implements RegraEmprestimo{
     @Override
     public void emprestar(Usuario usuario, int codigoLivro) {
         
-        int auxiliar = -1;
+        int auxiliar = 0, cont = 0;
         
         for(Livro livro: Biblioteca.livros){
-            if (codigoLivro == livro.getCodigo() && livro.isDisponivel()){
-                livro.setDisponivel(false);
-                System.out.println("\nEmpréstimo efetuado com sucesso.");
-                System.out.println("Nome: " + usuario.getNome());
-                System.out.println("Titulo: " + livro.getTitulo());
-                System.out.println("Data do empréstimo: " + this.getDataEmprestimo());
-                System.out.println("Data de devolução: " + this.getDataDevolver());
-                this.emprestimos.add(new EmprestimoAlunoPos(livro.getTitulo(), this.getDataEmprestimo()));
-                System.out.println();
-                auxiliar = -1;
-                break;
+            if (codigoLivro == livro.getCodigo()){
+                if (livro.isDisponivel()){
+                    livro.setDisponivel(false);
+                    System.out.println("\nEmpréstimo efetuado com sucesso.");
+                    System.out.println("Nome: " + usuario.getNome());
+                    System.out.println("Titulo: " + livro.getTitulo());
+                    System.out.println("Data do empréstimo: " + this.getDataEmprestimo());
+                    System.out.println("Data de devolução: " + this.getDataDevolver());
+                    this.emprestimos.add(new EmprestimoAlunoPos(livro.getTitulo(), this.getDataEmprestimo()));
+                    System.out.println();
+                    auxiliar = 0;
+                    cont = 0;
+                    break;
+                }
+                else{
+                    cont = 0;
+                    auxiliar = 2;
+                }
             }
-            if (codigoLivro != livro.getCodigo()){
-                auxiliar = 0;
-                continue;
+            else{
+                cont++;
             }
-            if (!livro.isDisponivel()){
+        }
+        if (cont > 0){
+            if (auxiliar > 0){
+                cont = 0;
+            }
+            else{
                 auxiliar = 1;
             }
         }
-        switch(auxiliar){
-            
-            case 0 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
-                    + "\nMotivo: Livro inexistente.");
+        
+        switch(auxiliar){    
             case 1 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
+                    + "\nMotivo: Livro inexistente.");
+            case 2 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
                     + "\nMotivo: Livro indisponível.");
         }        
     } 
@@ -98,7 +109,7 @@ public final class EmprestimoAlunoPos implements RegraEmprestimo{
         
         int cont = 1;
         for (EmprestimoAlunoPos emprestimo: emprestimos){
-            System.out.println("Empréstimo 0" + cont + ": ====\n");
+            System.out.println("\nEmpréstimo 0" + cont + ": ====\n");
             System.out.println("Titulo: " + emprestimo.titulo);
             System.out.println("Data do empréstimo: " + emprestimo.dataEmprestado);
             System.out.println("Empréstimo em curso? " + emprestimo.emprestimoEmCurso());
@@ -109,6 +120,11 @@ public final class EmprestimoAlunoPos implements RegraEmprestimo{
             }
             cont++;
         }
+    }
+
+    @Override
+    public void devolver(Usuario usuario, int codigoLivro) {
+        //pendente
     }
 }
         

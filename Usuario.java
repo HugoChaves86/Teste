@@ -25,14 +25,13 @@ public abstract class Usuario {
     
     //Métodos personalizados
     public abstract void display();
-    public abstract void devolver(Usuario usuario, int codigoLivro); 
     
     public void listarEmprestimos(){
         regraEmprestimo.listarEmprestimos();
     }
     
-    public void pegarEmprestado(Usuario usuario, int codigoLivro){
-        regraEmprestimo.emprestar(usuario, codigoLivro);
+    public void pegarEmprestado(int codigoLivro){
+        regraEmprestimo.emprestar(this, codigoLivro);
     }
     
     public void reservar(){

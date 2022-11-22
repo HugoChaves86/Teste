@@ -19,9 +19,4 @@ public class AlunoPos extends Usuario{
         System.out.println("Código: " + this.getCodigo());
         System.out.println("Aluno de pós-graduação.");
     }    
-
-    @Override
-    public void devolver(Usuario usuario, int codigoLivro) {
-        // lógica pendente.
-    }
 }
