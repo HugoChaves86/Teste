@@ -3,6 +3,9 @@ package engsoftware;
 import java.util.ArrayList;
 import java.util.List;
 
+import engsoftware.RegraEmprestimo;
+import engsoftware.RegraReserva;
+
 /**
  *
  * @author Hugo_Chaves
@@ -30,16 +33,12 @@ public abstract class Usuario {
         regraEmprestimo.listarEmprestimos();
     }
 
-    public void pegarEmprestado(Usuario usuario, int codigoLivro){
-        regraEmprestimo.pegarEmprestado(usuario, codigoLivro);
+    public void pegarEmprestado(int codigoLivro){
+        regraEmprestimo.emprestar(this, codigoLivro);
     }
 
     public void reservar(){
         regraReserva.reservar();
-    }
-
-    public void devolver(Usuario usuario, int codigoLivro){
-        regraEmprestimo.devolver(usuario, codigoLivro);
     }
 
     public String getNome() {

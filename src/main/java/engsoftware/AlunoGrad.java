@@ -4,14 +4,13 @@ package engsoftware;
  *
  * @author Hugo_Chaves
  */
-public class AlunoGrad extends Usuario{
+public class AlunoGrad extends Usuario {
 
     //construtor
     public AlunoGrad (String nome, int codigo){
         super(nome, codigo);
         regraEmprestimo = new EmprestimoAlunoGrad();
         regraReserva = new ReservaAlunoGrad();
-        usuarios.add(this);
     }
 
     @Override
