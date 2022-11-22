@@ -1,4 +1,4 @@
-package trabalhofinalengsoft;
+package engsoftware;
 
 /**
  *
@@ -12,11 +12,11 @@ public class Professor extends Usuario{
         regraEmprestimo = new EmprestimoProfessor();
         regraReserva = new ReservaProfessor();
     }
-    
+
     @Override
     public void display() {
         System.out.println("Nome: " + this.getNome());
         System.out.println("Código: " + this.getCodigo());
         System.out.println("Professor da UFBA.");
-    }   
+    }
 }

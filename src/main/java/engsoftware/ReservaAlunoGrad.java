@@ -1,4 +1,4 @@
-package trabalhofinalengsoft;
+package engsoftware;
 
 /**
  *
@@ -10,5 +10,5 @@ public class ReservaAlunoGrad implements RegraReserva{
     public void reservar() {
         System.out.println("Reserva efetuada para o aluno de graduação.");
     }
-    
+
 }

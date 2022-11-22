@@ -1,4 +1,4 @@
-package trabalhofinalengsoft;
+package engsoftware;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,17 +9,17 @@ import java.util.List;
  *
  * @author Hugo_Chaves
  */
-public final class EmprestimoAlunoGrad implements RegraEmprestimo{ 
-    
+public final class EmprestimoAlunoGrad implements RegraEmprestimo {
+
     private final int duracaoEmprestimoEmDias = 3;
     private final LocalDateTime dataEmprestimo = LocalDateTime.now();
-    private final List<Livro> emprestimos = new ArrayList<>();  
-    
+    private final List<Livro> emprestimos = new ArrayList<>();
+
     @Override
     public void emprestar(Usuario usuario, int codigoLivro) {
-        
+
         int auxiliar = 0, cont = 0;
-        
+
         for(Livro livro: Biblioteca.livros){
             if (codigoLivro == livro.getCodigo()){
                 if (livro.isDisponivel()){
@@ -65,8 +65,8 @@ public final class EmprestimoAlunoGrad implements RegraEmprestimo{
                 auxiliar = 1;
             }
         }
-        
-        switch(auxiliar){    
+
+        switch(auxiliar){
             case 1 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
                     + "\nMotivo: Livro inexistente.");
             case 2 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
@@ -76,60 +76,60 @@ public final class EmprestimoAlunoGrad implements RegraEmprestimo{
                     + usuario.getNome() + ".");
             case 4 -> System.out.println("\nEmpréstimo não efetuado para " + usuario.getNome() + "."
                     + "\nMotivo: Limite de empréstimos alcançado para " + usuario.getNome() + ".");
-        }       
-    } 
-    
+        }
+    }
+
     public String getDataEmprestimo() {
-		
+
         //Formatação de data e hora
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String formatado = dataEmprestimo.format(formatter);
 
         return formatado;
     }
-    
+
     public String getDataDevolucao() {
-    	
+
     	//Formatação de data e hora após o cálculo
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-    	LocalDateTime resultado = dataEmprestimo.plusDays(duracaoEmprestimoEmDias);    	
+    	LocalDateTime resultado = dataEmprestimo.plusDays(duracaoEmprestimoEmDias);
     	String formatado = resultado.format(formatter);
-        
+
     	return formatado;
-    }  
-    
+    }
+
     public boolean isEmprestado(Livro livro){
-        
+
         if(emprestimos.contains(livro)){
             return true;
         }
         return false;
-    }    
-    
+    }
+
     public String emprestimoEmCurso(){
-        
+
         LocalDateTime agora = LocalDateTime.now();
-    	LocalDateTime dataDevolver = dataEmprestimo.plusDays(duracaoEmprestimoEmDias);    	
-  
+    	LocalDateTime dataDevolver = dataEmprestimo.plusDays(duracaoEmprestimoEmDias);
+
         if(dataDevolver.isAfter(agora)){
-            
+
             return "Sim";
         }
         else{
-            
+
             return "Não";
         }
     }
-    
+
 //    public boolean estaDevendo(){
 //        for(Livro emprestimo: emprestimos){
 //            if(getDataDevolucao())
 //        }
 //    }
-    
+
     @Override
     public void listarEmprestimos(){
-        
+
         int cont = 1;
         for (Livro emprestimo: emprestimos){
             System.out.println("\nEmpréstimo 0" + cont + ": ====\n");
@@ -139,7 +139,7 @@ public final class EmprestimoAlunoGrad implements RegraEmprestimo{
             if (emprestimoEmCurso().equalsIgnoreCase("Sim")){
                 System.out.println("Data prevista para devolução: " + getDataDevolucao());
             }else{
-                System.out.println("Devolvido em: ..... (APLICAR AQUI A DATA DE DEVOLUÇÂO EFETIVA)");                
+                System.out.println("Devolvido em: ..... (APLICAR AQUI A DATA DE DEVOLUÇÂO EFETIVA)");
             }
             cont++;
         }
@@ -150,5 +150,5 @@ public final class EmprestimoAlunoGrad implements RegraEmprestimo{
         //pendente
     }
 }
-        
-        
+
+

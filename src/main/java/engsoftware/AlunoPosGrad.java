@@ -1,4 +1,4 @@
-package trabalhofinalengsoft;
+package engsoftware;
 
 /**
  *
@@ -12,11 +12,11 @@ public class AlunoPosGrad extends Usuario{
         regraEmprestimo = new EmprestimoAlunoPos();
         regraReserva = new ReservaAlunoPos();
     }
-    
+
     @Override
     public void display() {
         System.out.println("Nome: " + this.getNome());
         System.out.println("Código: " + this.getCodigo());
         System.out.println("Aluno de pós-graduação.");
-    }    
+    }
 }

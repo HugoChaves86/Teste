@@ -1,7 +1,10 @@
-package trabalhofinalengsoft;
+package engsoftware;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import engsoftware.RegraEmprestimo;
+import engsoftware.RegraReserva;
 
 /**
  *
@@ -14,29 +17,29 @@ public abstract class Usuario {
     private final int codigo;
     private boolean devedor;
     protected List<Usuario> usuarios;
-    
+
     // Construtor padrão
     public Usuario(String nome, int codigo){
         this.nome = nome;
-        this.codigo = codigo; 
+        this.codigo = codigo;
         this.devedor = false;
         this.usuarios = new ArrayList<>();
     }
-    
+
     //Métodos personalizados
     public abstract void display();
-    
+
     public void listarEmprestimos(){
         regraEmprestimo.listarEmprestimos();
     }
-    
+
     public void pegarEmprestado(int codigoLivro){
         regraEmprestimo.emprestar(this, codigoLivro);
     }
-    
+
     public void reservar(){
         regraReserva.reservar();
-    }    
+    }
 
     public String getNome() {
         return nome;
@@ -44,7 +47,7 @@ public abstract class Usuario {
 
     public int getCodigo() {
         return codigo;
-    }       
+    }
 
     public boolean isDevedor() {
         return devedor;
@@ -52,5 +55,5 @@ public abstract class Usuario {
 
     public void setDevedor(boolean devedor) {
         this.devedor = devedor;
-    }   
+    }
 }

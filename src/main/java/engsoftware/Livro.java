@@ -1,4 +1,4 @@
-package trabalhofinalengsoft;
+package engsoftware;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
  * @author Hugo_Chaves
  */
 public class Livro {
-    
+
     //atributos
     private final int codigo;
     private final int codigoExemplar;
@@ -18,7 +18,7 @@ public class Livro {
     private final String edicao;
     private final List<String> autores;
     private boolean disponivel;
-    
+
     //contrutor
     public Livro (int anoPublicacao, int codigo, int codExemplar, String titulo, String editora,
         String edicao, String autor1, String autor2, String autor3, String autor4){
@@ -35,9 +35,9 @@ public class Livro {
         this.autores.add(autor4);
         this.disponivel = true;
     }
-    
+
     public void detalhesDoLivro(){
-        
+
         System.out.println("Título: " + this.getTitulo());
         System.out.println("Ano de publicação: " + this.getAnoPublicacao());
         System.out.println("Código do livro: " + this.getCodigo());
@@ -70,11 +70,11 @@ public class Livro {
 
     public List<String> getAutores() {
         return autores;
-    }  
+    }
 
     public int getCodigoExemplar() {
         return codigoExemplar;
-    }   
+    }
 
     public boolean isDisponivel() {
         return disponivel;
@@ -82,5 +82,5 @@ public class Livro {
 
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
-    }   
+    }
 }
