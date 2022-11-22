@@ -3,19 +3,29 @@ import engsoftware.dao.BibliotecaDAOImpl;
 
 public abstract class Command {
     public BibliotecaDAOImpl bibliotecaDAO;
-    public String entrada;
+    public String comando;
+    public String idUsuario;
+    public String idLivro;
 
-    Command(BibliotecaDAOImpl bibliotecaDAO, String entrada) {
+    public Command(final BibliotecaDAOImpl bibliotecaDAO, final String comando, final String idUsuario, final String idLivro) {
         this.bibliotecaDAO = bibliotecaDAO;
-        this.entrada = entrada;
-    }
-
-    public CommandDTO splitPropriedades() {
-        String[] propriedades = this.entrada.split("\\s+");
-
-        return new CommandDTO(propriedades[0], propriedades[1], propriedades[2]);
+        this.comando = comando;
+        this.idUsuario = idUsuario;
+        this.idLivro = idLivro;
     }
 
     public abstract boolean execute();
+
+    public String getComando() {
+        return comando;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public String getIdLivro() {
+        return idLivro;
+    }
 
 }
