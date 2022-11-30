@@ -1,6 +1,5 @@
 package trabalhofinalengsoft.command;
 
-import trabalhofinalengsoft.command.Command;
 import java.util.HashMap;
 import java.util.Map;
 

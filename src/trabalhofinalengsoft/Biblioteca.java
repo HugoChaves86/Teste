@@ -123,25 +123,33 @@ public class Biblioteca {
                     System.out.println("\n" + usuario.getNome() + " não possui empréstimos.");
                     break;
                 }
+                int cont = 0;
                 for(Emprestimo emprestimo: usuario.emprestimos){
                     if(codigoLivro == emprestimo.getCodigo()){
-                        if(!emprestimo.isEmCurso()){
-                            System.out.println("\n" + usuario.getNome() + " não possui empréstimos em aberto com esse código.");
-                            break;
+                        if(emprestimo.isEmCurso()){
+                            System.out.println("\nDevolução efetuada em nome de " + usuario.getNome() + ".");
+                            System.out.println("Título: " + emprestimo.getTitulo() + ".");
+                            System.out.println("Código do exemplar: " + emprestimo.getCodigoExemplar() + ".");
+                            emprestimo.setDataDevolvido();
+                            emprestimo.setEmCurso(false);
+                            usuario.setDevedor(false);
+                            for (Livro livro: livros){
+                                if(emprestimo.getCodigo() == livro.getCodigo()){
+                                    livro.setDisponivel(true);
+                                    cont = 0;
+                                    break;
+                                }
+                            } 
+                            
                         }
-                        System.out.println("\nDevolução efetuada em nome de " + usuario.getNome() + ".");
-                        System.out.println("Título: " + emprestimo.getTitulo() + ".");
-                        System.out.println("Código do exemplar: " + emprestimo.getCodigoExemplar() + ".");
-                        emprestimo.setDataDevolvido();
-                        emprestimo.setEmCurso(false);
-                        usuario.setDevedor(false);
-                        for (Livro livro: livros){
-                            if(emprestimo.getCodigo() == livro.getCodigo()){
-                                livro.setDisponivel(true);
-                                break;
-                            }
-                        }                        
+                        else{
+                            cont++;
+                        }                                               
                     }
+                }
+                if (cont > 0){
+                    System.out.println("\nO usuário não possui empréstimos em aberto para este livro.");
+                    break;
                 }
             }
         }
@@ -208,7 +216,9 @@ public class Biblioteca {
         
         for(Livro livro: livros){
             if(codigoLivro == livro.getCodigo()){
-                System.out.println("\nTítulo: " + livro.getTitulo());
+                System.out.println("\n========================");
+                System.out.println("========================");
+                System.out.println("Título: " + livro.getTitulo());
                 System.out.println("Número de reservas: " + livro.getNumeroReservas());
                 System.out.println("Código do livro: " + livro.getCodigo());
                 System.out.println("Código do exemplar: " + livro.getCodigoExemplar());
@@ -223,21 +233,29 @@ public class Biblioteca {
                         }
                     }
                 }
-                if(livro.isDisponivel()){
-                    System.out.println("\nStatus: O livro está disponível.");
-                }else{
+                int cont = 0;
+                if(!livro.isDisponivel()){
                     for(Usuario usuario: usuarios){
                         for(Emprestimo emprestimo: usuario.emprestimos){                        
                             if(codigoLivro == emprestimo.getCodigo()){
-                                System.out.println("\nStatus: O livro está emprestado.");
-                                System.out.println("\n==== Dados do empréstimo ====\n");
-                                System.out.println("O livro está emprestado a " + usuario.getNome());
-                                System.out.println("Data do empréstimo: " + emprestimo.getDataEmprestimo());
-                                System.out.println("Data prevista para devolução: " + emprestimo.getDataDevolucao());
-                                break;
+                                if(emprestimo.isEmCurso()){
+                                    System.out.println("\nStatus: O livro está emprestado.");
+                                    System.out.println("\n==== Dados do empréstimo ====\n");
+                                    System.out.println("O livro está emprestado a " + usuario.getNome());
+                                    System.out.println("Data do empréstimo: " + emprestimo.getDataEmprestimo());
+                                    System.out.println("Data prevista para devolução: " + emprestimo.getDataDevolucao());
+                                    cont++;
+                                    break;
+                                }
                             }
                         }
+                        if (cont > 0){
+                            break;
+                        }
                     }
+                }
+                else{
+                    System.out.println("\nO livro está disponível.");
                 }
             }    
         }

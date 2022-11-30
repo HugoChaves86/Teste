@@ -51,6 +51,7 @@ public class Programa {
             }
             
         }while (!comando.equalsIgnoreCase("sai"));
-    }
+        teclado.close();
+    } 
 }      
         
