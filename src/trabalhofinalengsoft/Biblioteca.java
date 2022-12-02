@@ -117,7 +117,7 @@ public class Biblioteca {
     
     public void devolver(int codigoUsuario, int codigoLivro){
 
-        int auxiliar = 0;
+//        int auxiliar = 0;
         for(Usuario usuario: usuarios){
             if (codigoUsuario == usuario.getCodigo()){
                 if(usuario.emprestimos.isEmpty()){
@@ -125,10 +125,11 @@ public class Biblioteca {
                     break;
                 }
                 int cont = 0;
-                Livro livro = livros.get(auxiliar);
+//                Livro livro = livros.get(auxiliar);
                 for(Emprestimo emprestimo: usuario.emprestimos){
                     if(codigoLivro == emprestimo.getCodigo()){
                         if(emprestimo.isEmCurso()){
+                            Livro livro = livros.get(usuario.emprestimos.indexOf(emprestimo));
                             if(livro.getCodigoExemplar() == emprestimo.getCodigoExemplar()){
                                 System.out.println("\nDevolução efetuada em nome de " + usuario.getNome() + ".");
                                 System.out.println("Título: " + emprestimo.getTitulo() + ".");
@@ -151,7 +152,7 @@ public class Biblioteca {
                     break;
                 }
             }
-            auxiliar++;
+//            auxiliar++;
         }
     }
     
@@ -216,18 +217,16 @@ public class Biblioteca {
         
         for(Livro livro: livros){
             if(codigoLivro == livro.getCodigo()){
+                livro.dadosDoLivro();
                 if(livro.isDisponivel()){
-                    livro.dadosDoLivro();
                     System.out.println("\nStatus: o livro está disponível.");                
                 }
-                if(livro.isReservado()){
-                    livro.dadosDoLivro();
+                if(livro.getNumeroReservas() > 0){
                     System.out.println("\nStatus: O livro está reservado.");
                     System.out.println("Usuarios que reservaram o livro:\n");
                     Verificacoes.imprimeReservantes(usuarios, livro);
-                }                
-                Verificacoes.imprimeDadosEmprestimo(usuarios, livro);
-                               
+                }
+                Verificacoes.imprimeDadosEmprestimo(usuarios, livro);                               
             }    
         }
     }

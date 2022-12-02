@@ -114,7 +114,6 @@ public class Verificacoes {
             for (Emprestimo emprestimo: usuario.emprestimos){
                 if (livro.getCodigoExemplar() == emprestimo.getCodigoExemplar()){
                     if (emprestimo.isEmCurso()){
-                        livro.dadosDoLivro();
                         System.out.println("\nStatus: O livro está emprestado.");
                         System.out.println("\n==== Dados do empréstimo ====\n");
                         System.out.println("O livro está emprestado a " + usuario.getNome());
