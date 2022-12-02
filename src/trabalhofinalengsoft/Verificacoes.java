@@ -95,4 +95,39 @@ public class Verificacoes {
         }
         return false;
     }
+
+    public static void imprimeReservantes(List<Usuario> usuarios, Livro livro){
+        for(Usuario usuario: usuarios){
+            for(Reserva reserva: usuario.reservas){
+                if(reserva.getCodigoExemplar() == livro.getCodigoExemplar()){
+                    System.out.println("Nome do usuário: " + usuario.getNome());
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void imprimeDadosEmprestimo(List<Usuario> usuarios, Livro livro){
+
+        int cont = 0;
+        for(Usuario usuario: usuarios){
+            for (Emprestimo emprestimo: usuario.emprestimos){
+                if (livro.getCodigoExemplar() == emprestimo.getCodigoExemplar()){
+                    if (emprestimo.isEmCurso()){
+                        livro.dadosDoLivro();
+                        System.out.println("\nStatus: O livro está emprestado.");
+                        System.out.println("\n==== Dados do empréstimo ====\n");
+                        System.out.println("O livro está emprestado a " + usuario.getNome());
+                        System.out.println("Data do empréstimo: " + emprestimo.getDataEmprestimo());
+                        System.out.println("Data prevista para devolução: " + emprestimo.getDataDevolucao());
+                        cont++;
+                        break;                                   
+                    }
+                }
+            }
+            if (cont > 0){
+                break;
+            }
+        }
+    }
 }

@@ -19,6 +19,9 @@ public class EmprestimoAluno implements RegraEmprestimo{
                             if(!Verificacoes.estaDevendo(usuario)){
                                 if(Verificacoes.possuiReserva(usuario, codigoLivro)){
                                     Verificacoes.removeReserva(usuario, codigoLivro);
+                                    if(livro.getNumeroReservas() > 0){
+                                        livro.decrementaNumeroReservas();
+                                    }                                    
                                 }
                                 livro.setDisponivel(false);
                                 System.out.println("\nEmpréstimo efetuado em nome de " + usuario.getNome() + ".");

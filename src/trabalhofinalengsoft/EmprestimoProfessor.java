@@ -24,6 +24,9 @@ public class EmprestimoProfessor implements RegraEmprestimo{
                     if (livro.isDisponivel()){
                         
                         Verificacoes.removeReserva(usuario, codigoLivro);
+                        if(livro.getNumeroReservas() > 0){
+                            livro.decrementaNumeroReservas();
+                        } 
                         livro.setDisponivel(false);
                         System.out.println("\nEmpréstimo efetuado em nome de " + usuario.getNome() + ".");
                         System.out.println("Titulo: " + livro.getTitulo() + ".");
