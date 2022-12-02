@@ -60,6 +60,15 @@ public class Livro implements Sujeito{
     
     }
     
+    public void dadosDoLivro(){
+        System.out.println("\n========================");
+        System.out.println("========================\n");
+        System.out.println("Título: " + this.titulo);
+        System.out.println("Número de reservas: " + this.numeroReservas);
+        System.out.println("Código do livro: " + this.codigo);
+        System.out.println("Código do exemplar: " + this.codigoExemplar);
+    }
+    
     @Override
     public void registrarObservador(Observador observador) {
         observadores.add(observador);
