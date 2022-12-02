@@ -129,18 +129,19 @@ public class Biblioteca {
                 for(Emprestimo emprestimo: usuario.emprestimos){
                     if(codigoLivro == emprestimo.getCodigo()){
                         if(emprestimo.isEmCurso()){
-                            Livro livro = livros.get(usuario.emprestimos.indexOf(emprestimo));
-                            if(livro.getCodigoExemplar() == emprestimo.getCodigoExemplar()){
-                                System.out.println("\nDevolução efetuada em nome de " + usuario.getNome() + ".");
-                                System.out.println("Título: " + emprestimo.getTitulo() + ".");
-                                System.out.println("Código do exemplar: " + emprestimo.getCodigoExemplar() + ".");
-                                emprestimo.setDataDevolvido();
-                                emprestimo.setEmCurso(false);
-                                usuario.setDevedor(false);
-                                livro.setDisponivel(true);
-                                cont = 0;
-                                break;                                                                   
-                            }                            
+                            for (Livro livro: livros){
+                                if(livro.getCodigoExemplar() == emprestimo.getCodigoExemplar()){
+                                    System.out.println("\nDevolução efetuada em nome de " + usuario.getNome() + ".");
+                                    System.out.println("Título: " + emprestimo.getTitulo() + ".");
+                                    System.out.println("Código do exemplar: " + emprestimo.getCodigoExemplar() + ".");
+                                    emprestimo.setDataDevolvido();
+                                    emprestimo.setEmCurso(false);
+                                    usuario.setDevedor(false);
+                                    livro.setDisponivel(true);
+                                    cont = 0;
+                                    break;                                                                   
+                                }                               
+                            }
                         }
                         else{
                             cont++;
