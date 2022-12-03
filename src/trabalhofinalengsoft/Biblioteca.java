@@ -27,8 +27,11 @@ public class Biblioteca {
         usuarios = new ArrayList<>();
         
         this.usuarios.add(new AlunoGrad("Hugo Chaves", 10));
-        this.usuarios.add(new AlunoPos("Elis Alcantara", 15));
-        this.usuarios.add(new Professor("Cláudio Sant'Ana", 20));
+        this.usuarios.add(new AlunoGrad("João Mascarenhas", 15));
+        this.usuarios.add(new AlunoPos("Elis Alcantara", 20));
+        this.usuarios.add(new AlunoPos("Fernando Pessoa", 25));
+        this.usuarios.add(new Professor("Cláudio Sant'Ana", 30));
+        this.usuarios.add(new Professor("Rodrigo Rocha", 35));
         
         return usuarios;         
     }
@@ -224,7 +227,7 @@ public class Biblioteca {
                 }
                 if(livro.getNumeroReservas() > 0){
                     System.out.println("\nStatus: O livro está reservado.");
-                    System.out.println("Usuarios que reservaram o livro:\n");
+                    System.out.println("\nUsuarios que reservaram o livro:\n");
                     Verificacoes.imprimeReservantes(usuarios, livro);
                 }
                 Verificacoes.imprimeDadosEmprestimo(usuarios, livro);                               

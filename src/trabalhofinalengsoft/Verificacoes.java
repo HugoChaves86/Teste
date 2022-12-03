@@ -129,4 +129,15 @@ public class Verificacoes {
             }
         }
     }
+
+    public static boolean verificaDisponibilidade(List<Livro> livros, int codigoLivro){
+        for (Livro livro: livros){
+            if (codigoLivro == livro.getCodigo()){
+                if(livro.isDisponivel()){
+                    return true;
+                }                
+            }
+        }
+        return false;
+    }
 }
