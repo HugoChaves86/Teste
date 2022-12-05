@@ -27,10 +27,11 @@ public class Console{
         comandos.put("ntf", new ConsultarPorProfessor());
         
         //Consultas adicionais
-        comandos.put("exemplares", new listarExemplares());
-        comandos.put("usuarios", new listarUsuarios());
-        comandos.put("emprestimos", new listarEmprestimos());
-        comandos.put("reservas", new listarReservas());
+        comandos.put("livros", new ListarLivros());
+        comandos.put("exemplares", new ListarExemplares());
+        comandos.put("usuarios", new ListarUsuarios());
+        comandos.put("emprestimos", new ListarEmprestimos());
+        comandos.put("reservas", new ListarReservas());
         
         return comandos;
     }

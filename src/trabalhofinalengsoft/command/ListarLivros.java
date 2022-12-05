@@ -6,11 +6,11 @@ import trabalhofinalengsoft.Biblioteca;
  *
  * @author Hugo_Chaves
  */
-public class ListarExemplares implements Command{
+public class ListarLivros implements Command{
 
     @Override
     public void execute(int codigoUsuario, int codigoLivro) {
         
-        Biblioteca.getInstance().listarExemplares();
+        Biblioteca.getInstance().listarLivros();
     }    
 }

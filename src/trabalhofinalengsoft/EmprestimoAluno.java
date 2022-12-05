@@ -9,49 +9,63 @@ public class EmprestimoAluno implements RegraEmprestimo{
     @Override
     public void emprestar(Usuario usuario, int codigoLivro) {
         
-        int auxiliar = 0, cont = 0;
+        int auxiliar = 0, cont = 0, saida = 0;
 
         for(Livro livro: Biblioteca.getInstance().getLivros()){
             if (codigoLivro == livro.getCodigo()){
-                if (livro.isDisponivel() || Verificacoes.possuiReserva(usuario, codigoLivro)){
-                    if(!Verificacoes.possuiEmprestimo(usuario, livro)){
-                        if (!Verificacoes.estaNoLimiteDeEmprestimos(usuario)){
-                            if(!Verificacoes.estaDevendo(usuario)){
-                                if(Verificacoes.possuiReserva(usuario, codigoLivro)){
-                                    Verificacoes.removeReserva(usuario, codigoLivro);
-                                    if(livro.getNumeroReservas() > 0){
-                                        livro.decrementaNumeroReservas();
-                                    }                                    
+                for(Exemplar exemplar: livro.getExemplares()){
+                    if(exemplar.getTitulo().equalsIgnoreCase(livro.getTitulo())){
+                        for(Reserva reserva: usuario.reservas){
+                            if (exemplar.getCodigo() == reserva.getCodigoExemplar()){
+                                exemplar.setDisponivel(true);
+                            }
+                        }
+                        if(exemplar.isDisponivel()){
+                            if(!VerificacoesEAcoes.possuiEmprestimo(usuario, exemplar)){
+                                if (!VerificacoesEAcoes.estaNoLimiteDeEmprestimos(usuario)){
+                                    if(!VerificacoesEAcoes.estaDevendo(usuario)){
+                                        if(VerificacoesEAcoes.possuiReserva(usuario, livro)){
+                                            VerificacoesEAcoes.removeReserva(usuario, codigoLivro);
+                                            if(livro.getNumeroReservas() > 0){
+                                                livro.decrementaNumeroReservas();
+                                            }                                    
+                                        }
+                                        exemplar.setDisponivel(false);
+                                        exemplar.setReservado(false);
+                                        System.out.println("\nEmpréstimo efetuado em nome de " + usuario.getNome() + ".");
+                                        System.out.println("Titulo: " + exemplar.getTitulo() + ".");
+                                        System.out.println("Código do exemplar: " + exemplar.getCodigo());
+                                        usuario.emprestimos.add(new Emprestimo(exemplar.getTitulo(), livro.getCodigo(),
+                                            VerificacoesEAcoes.definirDuracaoEmprestimo(usuario), exemplar.getCodigo()));
+                                        auxiliar = 0;
+                                        cont = 0;
+                                        saida = 1;
+                                        break;
+                                    }
+                                    else{
+                                        cont = 0;
+                                        auxiliar = 5;
+                                    }
                                 }
-                                livro.setDisponivel(false);
-                                System.out.println("\nEmpréstimo efetuado em nome de " + usuario.getNome() + ".");
-                                System.out.println("Titulo: " + livro.getTitulo() + ".");
-                                System.out.println("Código do exemplar: " + livro.getCodigoExemplar());
-                                usuario.emprestimos.add(new Emprestimo(livro.getTitulo(), livro.getCodigo(),
-                                    Verificacoes.definirDuracaoEmprestimo(usuario), livro.getCodigoExemplar()));
-                                auxiliar = 0;
-                                cont = 0;
-                                break;
+                                else{
+                                    cont = 0;
+                                    auxiliar = 4;
+                                }
                             }
                             else{
                                 cont = 0;
-                                auxiliar = 5;
-                            }
+                                auxiliar = 3;
+                            } 
                         }
                         else{
                             cont = 0;
-                            auxiliar = 4;
+                            auxiliar = 2;                        
                         }
                     }
-                    else{
-                        cont = 0;
-                        auxiliar = 3;
-                    }
                 }
-                else{
-                    cont = 0;
-                    auxiliar = 2;                        
-                }               
+                if(saida == 1){
+                    break;
+                }
             }
             else{
                 cont++;

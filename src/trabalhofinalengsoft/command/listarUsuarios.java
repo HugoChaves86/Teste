@@ -6,7 +6,7 @@ import trabalhofinalengsoft.Biblioteca;
  *
  * @author Hugo_Chaves
  */
-public class listarUsuarios implements Command{
+public class ListarUsuarios implements Command{
 
     @Override
     public void execute(int codigoUsuario, int codigoLivro) {

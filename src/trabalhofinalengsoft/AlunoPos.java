@@ -21,7 +21,7 @@ public class AlunoPos extends Usuario{
     public void display() {
         System.out.println("Nome: " + this.getNome());
         System.out.println("Código: " + this.getCodigo());
-        System.out.println("Está devendo? " + Verificacoes.estaDevendo(this));
+        System.out.println("Está devendo? " + VerificacoesEAcoes.estaDevendo(this));
         System.out.println("Aluno de pós-graduação.");
     }   
     

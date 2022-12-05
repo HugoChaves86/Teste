@@ -37,7 +37,8 @@ public class Programa {
             
             System.out.println("\n========= Consultas adicionais =========");
             System.out.println("========================================\n");
-            System.out.println("Digite 'exemplares' para listar exemplares;");
+            System.out.println("Digite 'livros' para listar os livros;");
+            System.out.println("Digite 'exemplares' para listar os exemplares;");
             System.out.println("Digite 'usuarios' para listar usuários;");
             System.out.println("Digite 'emprestimos' para listar empréstimos;");
             System.out.println("Digite 'reservas' para listar reservas;");

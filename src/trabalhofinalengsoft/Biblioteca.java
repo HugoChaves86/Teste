@@ -64,10 +64,10 @@ public class Biblioteca {
         }
     }
     
-    public void adicionarLivro(int anoPublicacao, int codigo, int codExemplar, String titulo, String editora, 
+    public void adicionarLivro(int anoPublicacao, int codigo, String titulo, String editora, 
         String edicao, String autor1, String autor2, String autor3, String autor4){
         
-        livros.add(new Livro(anoPublicacao, codigo, codExemplar, titulo, editora, edicao, autor1, 
+        livros.add(new Livro(anoPublicacao, codigo, titulo, editora, edicao, autor1, 
                 autor2, autor3, autor4));        
     }
  
@@ -94,7 +94,36 @@ public class Biblioteca {
         }
         
         System.out.println("Total de livros: " + soma);
-    }   
+    } 
+    
+    public void listarExemplares(){
+        
+        int soma = 0;
+        
+        if (livros.isEmpty()){
+            
+            System.out.println("\n=========================");
+            System.out.println("====== Exemplares: ======");
+            System.out.println("=========================");
+            System.out.println("\nA biblioteca está vazia.\n");
+        }        
+            
+        System.out.println("\n=========================");
+        System.out.println("====== Exemplares: ======");
+        System.out.println("=========================");
+        
+        for(Livro livro: livros){
+            for(Exemplar exemplar: livro.getExemplares()){
+                if(livro.getTitulo().equalsIgnoreCase(exemplar.getTitulo())){
+                    exemplar.detalhesDoExemplar();
+                    System.out.println();
+                    soma++;
+                }
+            }            
+        }
+        
+        System.out.println("Total de exemplares: " + soma);
+    }
     
     public void realizarEmprestimo(int codigoUsuario, int codigoLivro){
         
@@ -119,31 +148,35 @@ public class Biblioteca {
     }
     
     public void devolver(int codigoUsuario, int codigoLivro){
-
-//        int auxiliar = 0;
+        
         for(Usuario usuario: usuarios){
             if (codigoUsuario == usuario.getCodigo()){
                 if(usuario.emprestimos.isEmpty()){
                     System.out.println("\n" + usuario.getNome() + " não possui empréstimos.");
                     break;
                 }
-                int cont = 0;
-//                Livro livro = livros.get(auxiliar);
+                int cont = 0, saida = 0;
                 for(Emprestimo emprestimo: usuario.emprestimos){
                     if(codigoLivro == emprestimo.getCodigo()){
                         if(emprestimo.isEmCurso()){
                             for (Livro livro: livros){
-                                if(livro.getCodigoExemplar() == emprestimo.getCodigoExemplar()){
-                                    System.out.println("\nDevolução efetuada em nome de " + usuario.getNome() + ".");
-                                    System.out.println("Título: " + emprestimo.getTitulo() + ".");
-                                    System.out.println("Código do exemplar: " + emprestimo.getCodigoExemplar() + ".");
-                                    emprestimo.setDataDevolvido();
-                                    emprestimo.setEmCurso(false);
-                                    usuario.setDevedor(false);
-                                    livro.setDisponivel(true);
-                                    cont = 0;
-                                    break;                                                                   
-                                }                               
+                                for(Exemplar exemplar: livro.getExemplares()){
+                                    if(exemplar.getCodigo() == emprestimo.getCodigoExemplar()){
+                                        System.out.println("\nDevolução efetuada em nome de " + usuario.getNome() + ".");
+                                        System.out.println("Título: " + emprestimo.getTitulo() + ".");
+                                        System.out.println("Código do exemplar: " + emprestimo.getCodigoExemplar()+ ".");
+                                        emprestimo.setDataDevolvido();
+                                        emprestimo.setEmCurso(false);
+                                        usuario.setDevedor(false);
+                                        exemplar.setDisponivel(true);
+                                        cont = 0;
+                                        saida = 1;
+                                        break;                                                                   
+                                    }                                   
+                                }
+                                if(saida == 1){
+                                    break;
+                                }
                             }
                         }
                         else{
@@ -156,7 +189,6 @@ public class Biblioteca {
                     break;
                 }
             }
-//            auxiliar++;
         }
     }
     
@@ -222,18 +254,25 @@ public class Biblioteca {
         for(Livro livro: livros){
             if(codigoLivro == livro.getCodigo()){
                 livro.dadosDoLivro();
-                if(livro.isDisponivel()){
-                    System.out.println("\nStatus: o livro está disponível.");                
+                System.out.println("\n====================================");
+                System.out.println("=========== Exemplares =============");
+                for(Exemplar exemplar: livro.getExemplares()){
+                    if (exemplar.getTitulo().equalsIgnoreCase(livro.getTitulo())){
+                        exemplar.dadosDoExemplar();
+                        if(exemplar.isReservado()){
+                            VerificacoesEAcoes.imprimeReservantes(usuarios, livro, exemplar); 
+                        }
+                        if(!exemplar.isReservado()){
+                            if(exemplar.isDisponivel()){
+                                System.out.println("\nStatus: o exemplar está disponível.");
+                            }
+                        }
+                        VerificacoesEAcoes.imprimeDadosEmprestimo(usuarios, exemplar);
+                    }
                 }
-                if(livro.getNumeroReservas() > 0){
-                    System.out.println("\nStatus: O livro está reservado.");
-                    System.out.println("\nUsuarios que reservaram o livro:\n");
-                    Verificacoes.imprimeReservantes(usuarios, livro);
-                }
-                Verificacoes.imprimeDadosEmprestimo(usuarios, livro);                               
             }    
         }
-    }
+    }                        
     
     public void consultaPorUsuario(int codigoUsuario){
         
@@ -272,54 +311,29 @@ public class Biblioteca {
         
         livros = new ArrayList<>();
         
-        this.adicionarLivro(2000, 100, 1, "Engenharia de Software", "Addison Wesley", "6a edicao", 
+        this.adicionarLivro(2000, 100, "Engenharia de Software", "Addison Wesley", "6a edicao", 
                 "Ian Sommervile", "", "", "");
         
-        this.adicionarLivro(2000, 100, 2, "Engenharia de Software", "Addison Wesley", "6a edicao", 
-                "Ian Sommervile", "", "", "");
-        
-        this.adicionarLivro(2000, 101, 3, "UML – Guia do Usuário", "Campus", "7a edicao", 
+        this.adicionarLivro(2000, 101, "UML – Guia do Usuário", "Campus", "7a edicao", 
                 "Grady Booch", "James Rumbaugh", "Ivar Jacobson", "");
         
-        this.adicionarLivro(2000, 101, 4, "UML – Guia do Usuário", "Campus", "7a edicao", 
-                "Grady Booch", "James Rumbaugh", "Ivar Jacobson", "");
-        
-        this.adicionarLivro(2014, 200, 5, "Code Complete", "Microsoft Press", "2a edicao", 
+        this.adicionarLivro(2014, 200, "Code Complete", "Microsoft Press", "2a edicao", 
                 "Steve McConnell", "", "", "");
         
-        this.adicionarLivro(2014, 200, 6, "Code Complete", "Microsoft Press", "2a edicao", 
-                "Steve McConnell", "", "", "");
-        
-        this.adicionarLivro(2002, 201, 7, "Agile Software Development, Principles, Patterns, and Practices",
+        this.adicionarLivro(2002, 201, "Agile Software Development, Principles, Patterns, and Practices",
                 "Prentice Hall", "1a edicao", "Robert Martin", "", "", "");
         
-        this.adicionarLivro(2002, 201, 8, "Agile Software Development, Principles, Patterns, and Practices",
-                "Prentice Hall", "1a edicao", "Robert Martin", "", "", "");
-        
-        this.adicionarLivro(1999, 300, 9, "Refactoring: Improving the Design of Existing Code",
+        this.adicionarLivro(1999, 300, "Refactoring: Improving the Design of Existing Code",
                 "Addison-Wesley Professional", "1a edicao", "Martin Fowler", "", "", "");
         
-        this.adicionarLivro(1999, 300, 10, "Refactoring: Improving the Design of Existing Code",
-                "Addison-Wesley Professional", "1a edicao", "Martin Fowler", "", "", "");
-        
-        this.adicionarLivro(2014, 301, 11, "Software Metrics: A Rigorous and Practical Approach",
+        this.adicionarLivro(2014, 301, "Software Metrics: A Rigorous and Practical Approach",
                 "CRC Press", "3a edicao", "Norman Fenton", "James Bieman", "", "");
         
-        this.adicionarLivro(2014, 301, 12, "Software Metrics: A Rigorous and Practical Approach",
-                "CRC Press", "3a edicao", "Norman Fenton", "James Bieman", "", "");
-        
-        this.adicionarLivro(1994, 400, 13, "Design Patterns: Elements of Reusable Object-Oriented Software",
+        this.adicionarLivro(1994, 400, "Design Patterns: Elements of Reusable Object-Oriented Software",
                 "Addison-Wesley Professional", "1a edicao", "Erich Gamma", "Richard Helm", "Ralph Johnson",
                 "John Vlissides");
         
-        this.adicionarLivro(1994, 400, 14, "Design Patterns: Elements of Reusable Object-Oriented Software",
-                "Addison-Wesley Professional", "1a edicao", "Erich Gamma", "Richard Helm", "Ralph Johnson",
-                "John Vlissides");
-        
-        this.adicionarLivro(2003, 401, 15, "UML Distilled: A Brief Guide to the Standard Object Modeling Language",
-                "Addison-Wesley Professional", "3a edicao", "Martin Fowler", "", "", "");
-        
-        this.adicionarLivro(2003, 401, 16, "UML Distilled: A Brief Guide to the Standard Object Modeling Language",
+        this.adicionarLivro(2003, 401, "UML Distilled: A Brief Guide to the Standard Object Modeling Language",
                 "Addison-Wesley Professional", "3a edicao", "Martin Fowler", "", "", "");
         
         return livros;

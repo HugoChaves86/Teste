@@ -9,45 +9,55 @@ public class ReservaGeral implements RegraReserva{
     @Override
     public void reservar(Usuario usuario, int codigoLivro) {
         
-        int auxiliar = 0, cont = 0;
+        int auxiliar = 0, cont = 0, saida = 0;
         
         for(Livro livro: Biblioteca.getInstance().getLivros()){
             if(codigoLivro == livro.getCodigo()){
-                if(Verificacoes.verificaDisponibilidade(Biblioteca.getInstance().getLivros(), codigoLivro)){
-                    auxiliar = 2;
-                    break;
-                }
-                if(!Verificacoes.possuiReserva(usuario, codigoLivro)){
-                    if(!Verificacoes.possuiEmprestimo(usuario, livro)){
-                        if(!Verificacoes.estaNoLimiteDeReservas(usuario)){
-                            System.out.println("\nReserva efetuada com sucesso.");
-                            System.out.println("Nome: " + usuario.getNome());
-                            System.out.println("Titulo: " + livro.getTitulo());
-                            System.out.println("Código do exemplar: " + livro.getCodigoExemplar());
-                            usuario.reservas.add(new Reserva(livro.getTitulo(), livro.getCodigo(), 
-                                livro.getCodigoExemplar()));
-                            livro.setDisponivel(false);
-                            livro.setReservado(true);
-                            livro.incrementaNumeroReservas();
-                            livro.valoresAlterados(livro.getNumeroReservas());
-                            auxiliar = 0;
-                            cont = 0;
-                            break;
+                for(Exemplar exemplar: livro.getExemplares()){
+                    if(exemplar.getTitulo().equalsIgnoreCase(livro.getTitulo())){
+                        if(exemplar.isDisponivel()){
+                            if(!VerificacoesEAcoes.possuiReserva(usuario, livro)){
+                                if(!VerificacoesEAcoes.possuiEmprestimo(usuario, exemplar)){
+                                    if(!VerificacoesEAcoes.estaNoLimiteDeReservas(usuario)){
+                                        System.out.println("\nReserva efetuada com sucesso.");
+                                        System.out.println("Nome: " + usuario.getNome());
+                                        System.out.println("Titulo: " + exemplar.getTitulo());
+                                        System.out.println("Código do exemplar: " + exemplar.getCodigo());
+                                        usuario.reservas.add(new Reserva(exemplar.getTitulo(), livro.getCodigo(), 
+                                            exemplar.getCodigo()));
+                                        exemplar.setDisponivel(false);
+                                        exemplar.setReservado(true);
+                                        livro.incrementaNumeroReservas();
+                                        livro.valoresAlterados(livro.getNumeroReservas());
+                                        auxiliar = 0;
+                                        cont = 0;
+                                        saida = 1;
+                                        break;
+                                    }
+                                    else{
+                                        auxiliar = 5;
+                                        cont = 0;
+                                    }
+                                }
+                                else{
+                                    auxiliar = 4;
+                                    cont = 0;
+                                }                    
+                            }
+                            else{
+                                auxiliar = 3;
+                                cont = 0;
+                            }      
                         }
                         else{
-                            auxiliar = 5;
+                            auxiliar = 2;
                             cont = 0;
                         }
                     }
-                    else{
-                        auxiliar = 4;
-                        cont = 0;
-                    }                    
                 }
-                else{
-                    auxiliar = 3;
-                    cont = 0;
-                }   
+                if(saida == 1){
+                    break;
+                }
             }
             else{
                 cont++;
@@ -65,7 +75,7 @@ public class ReservaGeral implements RegraReserva{
             case 1 -> System.out.println("\nNão foi possível reservar o livro para " + usuario.getNome() + "."
             + "\nMotivo: Livro inexistente.");
             case 2 -> System.out.println("\nNão foi possível reservar o livro para " + usuario.getNome() + "."
-            + "\nMotivo: Existem exemplares disponíveis.");
+            + "\nMotivo: Livro indisponível.");
             case 3 -> System.out.println("\nNão foi possível reservar o livro para " + usuario.getNome() + "."
             + "\nMotivo: " + usuario.getNome() + " já possui uma reserva para este livro.");
             case 4 -> System.out.println("\nNão foi possível reservar o livro para " + usuario.getNome() + "."

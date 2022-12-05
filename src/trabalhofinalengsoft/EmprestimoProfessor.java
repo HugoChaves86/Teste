@@ -11,41 +11,49 @@ public class EmprestimoProfessor implements RegraEmprestimo{
     @Override
     public void emprestar(Usuario usuario, int codigoLivro) {
         
-        int auxiliar = 0, cont = 0;
+        int auxiliar = 0, cont = 0, saida = 0;
 
         for(Livro livro: Biblioteca.getInstance().getLivros()){
             if (codigoLivro == livro.getCodigo()){
-                if(!Verificacoes.estaDevendo(usuario)){
-                    if(!Verificacoes.possuiReserva(usuario, codigoLivro)){
-                        if(livro.isReservado()){
-                            livro.setDisponivel(true);
-                        }                    
-                    }
-                    if (livro.isDisponivel()){
-                        
-                        Verificacoes.removeReserva(usuario, codigoLivro);
-                        if(livro.getNumeroReservas() > 0){
-                            livro.decrementaNumeroReservas();
-                        } 
-                        livro.setDisponivel(false);
-                        System.out.println("\nEmpréstimo efetuado em nome de " + usuario.getNome() + ".");
-                        System.out.println("Titulo: " + livro.getTitulo() + ".");
-                        System.out.println("Código do exemplar: " + livro.getCodigoExemplar());
-                        usuario.emprestimos.add(new Emprestimo(livro.getTitulo(), livro.getCodigo(),
-                            this.duracaoEmprestimoEmDias, livro.getCodigoExemplar()));
-                        auxiliar = 0;
-                        cont = 0;
-                        break;
-                    }
-                    else{
-                        cont = 0;
-                        auxiliar = 2;
+                for(Exemplar exemplar: livro.getExemplares()){
+                    if(exemplar.getTitulo().equalsIgnoreCase(livro.getTitulo())){
+                        if(!VerificacoesEAcoes.estaDevendo(usuario)){
+                            if(exemplar.isReservado()){
+                                exemplar.setDisponivel(true);
+                            }
+                            if (exemplar.isDisponivel()){
+                                if(VerificacoesEAcoes.possuiReserva(usuario, livro)){
+                                    VerificacoesEAcoes.removeReserva(usuario, codigoLivro);
+                                    if(livro.getNumeroReservas() > 0){
+                                        livro.decrementaNumeroReservas();
+                                        exemplar.setReservado(false);
+                                    }                                    
+                                }
+                                exemplar.setDisponivel(false);
+                                System.out.println("\nEmpréstimo efetuado em nome de " + usuario.getNome() + ".");
+                                System.out.println("Titulo: " + exemplar.getTitulo() + ".");
+                                System.out.println("Código do exemplar: " + exemplar.getCodigo());
+                                usuario.emprestimos.add(new Emprestimo(exemplar.getTitulo(), livro.getCodigo(),
+                                    this.duracaoEmprestimoEmDias, exemplar.getCodigo()));
+                                auxiliar = 0;
+                                cont = 0;
+                                saida = 1;
+                                break;
+                            }
+                            else{
+                                cont = 0;
+                                auxiliar = 2;
+                            }
+                        }
+                        else{
+                            cont = 0;
+                            auxiliar = 3;                        
+                        }               
                     }
                 }
-                else{
-                    cont = 0;
-                    auxiliar = 3;                        
-                }               
+                if (saida == 1){
+                    break;
+                }
             }
             else{
                 cont++;
